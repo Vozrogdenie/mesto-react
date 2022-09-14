@@ -9,8 +9,8 @@ class Header extends React.Component{
 
 render() {
     return (
-    <div class="header"> 
-        <img class="header__logo" src={headLogo} alt="Логотип"/>
+    <div className="header"> 
+        <img className="header__logo" src={headLogo} alt="Логотип"/>
     </div>
     );
   }

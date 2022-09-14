@@ -28,6 +28,4 @@ export const popupNewPlaceTitleInput = document.querySelector('.popup__input_val
 export const popupNewPlaceUrlInput = document.querySelector('.popup__input_value_url');
 export const nameTitle = document.querySelector('.profile__title');
 export const professionSubtitle = document.querySelector('.profile__subtitle');
-export const api_url = "https://mesto.nomoreparties.co/v1/cohort-48";
-export const api_auth = "c7779e8e-b945-41f5-b681-0ea9ccf3c32a";
 export const changeAvatarButton = document.querySelector('.profile__icon-edit');
