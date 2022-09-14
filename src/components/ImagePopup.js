@@ -1,5 +1,5 @@
 import closePopup from '../images/Close.png'
-function PopupImage(props) {
+function ImagePopup(props) {
 
     return(
         <div className={`${ props.card ? "popup_opened" : ""} popup popup_type_picture`}>
@@ -14,4 +14,4 @@ function PopupImage(props) {
     );
 };
 
-export default PopupImage;
+export default ImagePopup;

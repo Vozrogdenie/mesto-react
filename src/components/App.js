@@ -1,5 +1,5 @@
 import PopupYouSure from './PopupYouSure';
-import PopupImage from './PopupImage';
+import ImagePopup from './ImagePopup';
 import PopupEditAvatar from './PopupEditAvatar';
 import PopupAddPlace from './PopupAddPlace';
 import PopupWithForm from './PopupWithForm';
@@ -59,7 +59,7 @@ function App() {
       <PopupWithForm name="edit" opened={isEditProfilePopupOpen} title='Редактировать профиль' button={closeAllPopups}><PopupEditProfile/> </PopupWithForm>
       <PopupWithForm name="new-place" opened={isAddPlacePopupOpen} title='Новое место' button={closeAllPopups}><PopupAddPlace/> </PopupWithForm>
       <PopupWithForm name="new-avatar" opened={isEditAvatarPopupOpen} title='Обновить аватар?' button={closeAllPopups}><PopupEditAvatar/> </PopupWithForm>
-      <PopupImage card={selectedCard} onClose={closeAllPopups} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
 
     </div>
