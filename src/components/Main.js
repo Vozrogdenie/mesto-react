@@ -3,7 +3,7 @@ import contentEdit from '../images/Vectorplusknopka.svg'
 import contentVector from '../images/Vectorredactirovanie.svg' 
 import contentPen from '../images/eeedit.png'
 import { useState } from 'react';
-import api from '../utils/api';
+import api from '../utils/API';
 import Card from './Card';
 
 function Main(props){
