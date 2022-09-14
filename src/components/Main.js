@@ -3,7 +3,7 @@ import contentEdit from '../images/Vectorplusknopka.svg'
 import contentVector from '../images/Vectorredactirovanie.svg' 
 import contentPen from '../images/eeedit.png'
 import { useState } from 'react';
-import api from '../utils/API';
+import api from '../utils/api';
 import Card from './Card';
 
 function Main(props){
@@ -52,9 +52,7 @@ function Main(props){
                 </div>
             </section>
             <section className="elements">
-            {cards ? cards.map((card) => {
-                return <Card key={card._id} card={card} handleCardClick={props.handleCardClick}/>
-            }) : []}
+            {cards && cards.map(card => <Card key={card._id} card={card} handleCardClick={props.handleCardClick} />)}
             </section>
         </main>
     );

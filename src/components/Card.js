@@ -8,7 +8,7 @@ function Card(props) {
     
     return(
         <div className="element">
-            <button className="button" type="button" aria-label="Мусорка" >
+            <button className="button" type="button" aria-label="Удалить карточку" >
                 <img className="element__trach" src={trach} alt="Удалить"/>
             </button>
             <img className="element__item" onClick={onCardClick} src={props.card.link} alt=""/>    

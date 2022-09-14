@@ -56,11 +56,11 @@ function App() {
         handleCardClick={handleCardClick}
       />
       <Footer />
-      <PopupWithForm name="edit" opened={isEditProfilePopupOpen} title='Редактировать профиль' button={closeAllPopups}><PopupEditProfile/> </PopupWithForm>
-      <PopupWithForm name="new-place" opened={isAddPlacePopupOpen} title='Новое место' button={closeAllPopups}><PopupAddPlace/> </PopupWithForm>
-      <PopupWithForm name="new-avatar" opened={isEditAvatarPopupOpen} title='Обновить аватар?' button={closeAllPopups}><PopupEditAvatar/> </PopupWithForm>
+      <PopupWithForm name="edit" opened={isEditProfilePopupOpen} title='Редактировать профиль' buttonText='Сохранить' button={closeAllPopups}><PopupEditProfile/> </PopupWithForm>
+      <PopupWithForm name="new-place" opened={isAddPlacePopupOpen} title='Новое место' buttonText='Добавить' button={closeAllPopups}><PopupAddPlace/> </PopupWithForm>
+      <PopupWithForm name="new-avatar" opened={isEditAvatarPopupOpen} title='Обновить аватар?' buttonText='Сохранить' button={closeAllPopups}><PopupEditAvatar/> </PopupWithForm>
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-      <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
+      <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?'buttonText='Да' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
 
     </div>
   );

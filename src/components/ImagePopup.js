@@ -2,7 +2,7 @@ import closePopup from '../images/Close.png'
 function ImagePopup(props) {
 
     return(
-        <div className={`${ props.card ? "popup_opened" : ""} popup popup_type_picture`}>
+        <div className={`${props.card && "popup_opened"} popup popup_type_picture`}>
             <div className="popup__container popup__container_type_picture">
                 <button className="button" type="button">
                     <img className="popup__close" onClick={props.onClose} src={closePopup} alt="Кнопка закрытия"/>
