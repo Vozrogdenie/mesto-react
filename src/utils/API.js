@@ -101,6 +101,15 @@ class Api {
             })
         }).then(this._handleResponce);
     };
+
+    changeLikeCardStatus(id, isLiked) {
+        if(isLiked) {
+            return this.removeLike(id);
+        } else {
+            return this.addLike(id);
+        }
+    }
+    
 };
 
 const api = new Api(api_url, api_auth);
