@@ -7,11 +7,11 @@ function Card(props) {
     }
 
     const onCardLike = () => {
-        props.handleCardLike(props.card)
+        props.onCardLike(props.card)
     }
 
     const onCardDelete = () => {
-        props.handleCardDelete(props.card)
+        props.onCardDelete(props.card)
     }
 
     return(

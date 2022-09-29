@@ -22,6 +22,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({name:'', about:'', avatar:''})
   const [currentCard, setCurrentCard] = useState({name: '', link: ''});
+  const [cards, setCards] = useState([])
  
   function handleCardClick(card) {
     setSelectedCard(card)
@@ -45,7 +46,31 @@ function App() {
     setIsEditProfilePopupOpen(false)
     setIsAddPlacePopupOpen(false)
   };
- 
+  
+  React.useEffect(() => {
+    api.getApiCards()
+        .then((res) => {
+            setCards(res)
+        }).catch((err)=>{
+            console.log(err)
+        });
+}, []);
+
+function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+} ;
+
+function handleCardDelete(card) {
+    api.deleteCard(card._id)
+        .then((cards) => {
+            setCards((state) => state.filter((c) => c._id === card._id ? c = 0 : cards));
+        }).catch((err)=>{
+            console.log(err)
+        });
+};
   function handleUpdateAvatar(avatar) {
     api.changeAvatar(avatar)
       .then((res) => {
@@ -66,6 +91,16 @@ function App() {
   });
 };
 
+  function handleAddPlaceSubmit(card) {
+    api.createCards(card)
+    .then(newCard => {
+      setCards([newCard, ...cards]);
+      closeAllPopups(); 
+    }).catch((err) => {
+      console.log(err)
+    });
+  };
+
   React.useEffect(() => {
     api.getApiUsers()
         .then((name, about) => {
@@ -78,24 +113,28 @@ function App() {
   return (
     <div >
       <CurrentUserContext.Provider value={currentUser}>
-    <Header />
-    <Main
-      onEditProfile={handleEditProfileClick}
-      isEditProfilePopupOpen={isEditProfilePopupOpen}
-      onAddPlace={handleAddPlaceClick}
-      isAddPlacePopupOpen={isAddPlacePopupOpen}
-      onEditAvatar={handleEditAvatarClick}
-      isEditAvatarPopupOpen={isEditAvatarPopupOpen}
-      closeAllPopups={closeAllPopups}
-      selectedCard={selectedCard}
-      handleCardClick={handleCardClick}
-    />
-    <Footer />
-    <PopupEditProfile  opened={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser}  button={closeAllPopups}></PopupEditProfile> 
-    <PopupWithForm name="new-place" opened={isAddPlacePopupOpen} title='Новое место' buttonText='Добавить' button={closeAllPopups}><PopupAddPlace/> </PopupWithForm>
-    <PopupEditAvatar onUpdateAvatar={handleUpdateAvatar} opened={isEditAvatarPopupOpen} button={closeAllPopups}></PopupEditAvatar>
-    <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?'buttonText='Да' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
+        <CurrentCardContext.Provider value={cards}>
+        <Header />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          isEditProfilePopupOpen={isEditProfilePopupOpen}
+          onAddPlace={handleAddPlaceClick}
+          isAddPlacePopupOpen={isAddPlacePopupOpen}
+          onEditAvatar={handleEditAvatarClick}
+          isEditAvatarPopupOpen={isEditAvatarPopupOpen}
+          closeAllPopups={closeAllPopups}
+          selectedCard={selectedCard}
+          handleCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+        />
+        <Footer />
+        <PopupEditProfile opened={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser}  button={closeAllPopups}></PopupEditProfile> 
+        <PopupAddPlace opened={isAddPlacePopupOpen} onPlace={handleAddPlaceSubmit} button={closeAllPopups}></PopupAddPlace>
+        <PopupEditAvatar opened={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} button={closeAllPopups}></PopupEditAvatar>
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?'buttonText='Да' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
+      </CurrentCardContext.Provider>
     </CurrentUserContext.Provider>
     </div>
   );
