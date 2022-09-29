@@ -8,7 +8,6 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import { useState } from 'react';
-import '../index.css'
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CurrentCardContext } from '../contexts/CurrentCardContext';
 import React from 'react';
@@ -21,7 +20,6 @@ function App() {
   const [isYouSurePopupOpen, setIsYouSurePopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({name:'', about:'', avatar:''})
-  const [currentCard, setCurrentCard] = useState({name: '', link: ''});
   const [cards, setCards] = useState([])
  
   function handleCardClick(card) {
@@ -59,16 +57,18 @@ function App() {
 function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c)).catch((err)=>{
+          console.log(err)
+      });;
     });
 } ;
 
 function handleCardDelete(card) {
     api.deleteCard(card._id)
-        .then((cards) => {
-            setCards((state) => state.filter((c) => c._id === card._id ? c = 0 : cards));
+        .then(() => {
+          setCards(cards.filter((c) => c._id === card._id ? c = false : c))
         }).catch((err)=>{
-            console.log(err)
+          console.log(err)
         });
 };
   function handleUpdateAvatar(avatar) {
@@ -117,11 +117,8 @@ function handleCardDelete(card) {
         <Header />
         <Main
           onEditProfile={handleEditProfileClick}
-          isEditProfilePopupOpen={isEditProfilePopupOpen}
           onAddPlace={handleAddPlaceClick}
-          isAddPlacePopupOpen={isAddPlacePopupOpen}
           onEditAvatar={handleEditAvatarClick}
-          isEditAvatarPopupOpen={isEditAvatarPopupOpen}
           closeAllPopups={closeAllPopups}
           selectedCard={selectedCard}
           handleCardClick={handleCardClick}
@@ -129,11 +126,11 @@ function handleCardDelete(card) {
           onCardDelete={handleCardDelete}
         />
         <Footer />
-        <PopupEditProfile opened={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser}  button={closeAllPopups}></PopupEditProfile> 
-        <PopupAddPlace opened={isAddPlacePopupOpen} onPlace={handleAddPlaceSubmit} button={closeAllPopups}></PopupAddPlace>
-        <PopupEditAvatar opened={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} button={closeAllPopups}></PopupEditAvatar>
+        <PopupEditProfile opened={isEditProfilePopupOpen} onUpdateUser={handleUpdateUser}  onClosePopup={closeAllPopups}></PopupEditProfile> 
+        <PopupAddPlace opened={isAddPlacePopupOpen} onPlace={handleAddPlaceSubmit} onClosePopup={closeAllPopups}></PopupAddPlace>
+        <PopupEditAvatar opened={isEditAvatarPopupOpen} onUpdateAvatar={handleUpdateAvatar} onClosePopup={closeAllPopups}></PopupEditAvatar>
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-        <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?'buttonText='Да' button={closeAllPopups}><PopupYouSure/></PopupWithForm>
+        <PopupWithForm name="you-sure" opened={isYouSurePopupOpen} title='Вы уверены?'buttonText='Да' onClosePopup={closeAllPopups}><PopupYouSure/></PopupWithForm>
       </CurrentCardContext.Provider>
     </CurrentUserContext.Provider>
     </div>

@@ -4,7 +4,7 @@ function PopupWithForm(props){
     return(
         <div className={`${ props.opened ? "popup_opened" : ""} popup popup-${props.name}`}>
             <div className="popup__container">
-                <button onClick={props.button} className={`button ${props.name}`} type="button">
+                <button onClick={props.onClosePopup} className={`button ${props.name}`} type="button">
                     <img className="popup__close" src={closePopup} alt="Кнопка закрытия"/>
                 </button>
                 <h2 className={`popup__title ${props.name}`}>{props.title}</h2>

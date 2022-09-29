@@ -21,7 +21,7 @@ function Card(props) {
                     <img className="element__trach" src={trach} alt="Удалить"/>
                 </button>
             : []}
-            <img className="element__item" onClick={onCardClick} src={props.card.link} alt=""/>    
+            <img className="element__item" onClick={onCardClick} src={props.card.link} alt={props.card.name}/>    
             <div className="element__info">
                 <h2 className="element__text">{props.card.name}</h2>
                 <div>
