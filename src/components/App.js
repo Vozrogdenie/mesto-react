@@ -52,25 +52,26 @@ function App() {
         }).catch((err)=>{
             console.log(err)
         });
-}, []);
+  }, []);
 
-function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-        setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
-    }).catch((err)=>{
-      console.log(err)
-  });;
-} ;
+  function handleCardLike(card) {
+      const isLiked = card.likes.some(i => i._id === currentUser._id);
+      api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+          setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
+      }).catch((err)=>{
+        console.log(err)
+    });;
+  } ;
 
-function handleCardDelete(card) {
+  function handleCardDelete(card) {
     api.deleteCard(card._id)
-        .then(() => {
-          setCards(cards.filter((c) => c._id === card._id ? c = false : c))
-        }).catch((err)=>{
-          console.log(err)
-        });
-};
+      .then(() => {
+        setCards(cards.filter(c => c._id !== card._id))
+      }).catch((err)=>{
+        console.log(err)
+      });   
+  };
+
   function handleUpdateAvatar(avatar) {
     api.changeAvatar(avatar)
       .then((res) => {
